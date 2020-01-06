@@ -6,6 +6,6 @@ import java.io.Serializable;
 
 public interface SocketClientService extends ProtocolService {
 
-    public Object sendAndReceive(Serializable sendMessage) throws Exception;
+    public Serializable sendAndReceive(Serializable sendMessage) throws Exception;
 
 }

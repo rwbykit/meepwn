@@ -28,15 +28,20 @@ public class NettySocketClientService implements SocketClientService {
     EventLoopGroup group = new NioEventLoopGroup();
     private boolean isConnect = false;
 
+    public NettySocketClientService(AbstractNettyClientChannelHandler handler, SocketClientConfig config) {
+        this.handler = handler;
+        this.config = config;
+    }
+
     @Override
-    public Object sendAndReceive(Serializable sendMessage) throws Exception {
+    public Serializable sendAndReceive(Serializable sendMessage) throws Exception {
         if (!isConnect) {
             throw new Exception("host: " + config.getHost() + " port: " + config.getPort() + "connect server failure!");
         }
 
         handler.setOutMessage(sendMessage);
         handler.setWrite(true);
-        Object rtnMessage = null;
+        Serializable rtnMessage = null;
         while (true) {
             if (handler.isRead()) {
                 rtnMessage = handler.getInMessage();
@@ -50,6 +55,7 @@ public class NettySocketClientService implements SocketClientService {
                 }
             }
         }
+        this.destroy();
         return rtnMessage;
 
     }
@@ -57,7 +63,6 @@ public class NettySocketClientService implements SocketClientService {
     @Override
     public void start() {
         try {
-            ChannelFuture future = null;
             bootstrap = new Bootstrap();
             bootstrap.channel(NioSocketChannel.class)
                     .group(group)
@@ -72,11 +77,11 @@ public class NettySocketClientService implements SocketClientService {
                         protected void initChannel(SocketChannel sh) throws Exception {
                             sh.pipeline().addLast(new IdleStateHandler(config.getReadTimeOut(),
                                     config.getWriteTimeOut(), config.getWriteTimeOut(), TimeUnit.SECONDS));
-                           sh.pipeline().addLast(handler);
+                            sh.pipeline().addLast(new ProxyChannelHandler(handler));
                         }
                     });
 
-            future = bootstrap.connect(config.getHost(), config.getPort()).sync();
+            ChannelFuture future = bootstrap.connect(config.getHost(), config.getPort()).sync();
             if (future.isSuccess()) {
                 socketChannel = (SocketChannel)future.channel();
                 isConnect = true;
@@ -94,7 +99,8 @@ public class NettySocketClientService implements SocketClientService {
 
     @Override
     public void destroy() {
-        if (Objects.nonNull(socketChannel)) {
+        if (Objects.nonNull(socketChannel) && socketChannel.isOpen()) {
+            socketChannel.disconnect();
             socketChannel.close();
         }
         try {

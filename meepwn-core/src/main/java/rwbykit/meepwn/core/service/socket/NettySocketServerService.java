@@ -24,10 +24,6 @@ public class NettySocketServerService implements SocketServerService {
     EventLoopGroup cGroup;
     ChannelFuture channelFuture;
 
-    public NettySocketServerService() {
-        super();
-    }
-
     public NettySocketServerService(AbstractNettyChannelInboundHandler adapter, SocketServerConfig config) {
         this.adapter = adapter;
         this.config = config;
@@ -49,7 +45,7 @@ public class NettySocketServerService implements SocketServerService {
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline().addLast(new IdleStateHandler(config.getReadTimeOut(), config.getWriteTimeOut(),
                                 config.getAllTimeOut(), TimeUnit.SECONDS));
-                        socketChannel.pipeline().addLast(new SocketServerProxyHandler(adapter));
+                        socketChannel.pipeline().addLast(new ProxyChannelHandler(adapter));
                     }
                 });
         try {

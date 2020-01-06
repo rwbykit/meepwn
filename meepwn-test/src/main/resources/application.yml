@@ -1,0 +1,20 @@
+server:
+    port: 8080
+
+spring:
+    application:
+        name: test
+
+
+rwbykit:
+    socket:
+        name: 123123
+        servers:
+            test:
+                actionName: rwbykit.meepwn.config.socket.CustomziedActionService
+                data-converter:
+                    head-bytes-length: 6
+            test1:
+                action-name: rwbykit.meepwn.config.socket.CustomziedActionService
+                data-converter:
+                    head-bytes-length: 6
