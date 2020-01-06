@@ -2,7 +2,6 @@ package rwbykit.meepwn.core.service.socket;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
@@ -50,7 +49,7 @@ public class NettySocketServerService implements SocketServerService {
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline().addLast(new IdleStateHandler(config.getReadTimeOut(), config.getWriteTimeOut(),
                                 config.getAllTimeOut(), TimeUnit.SECONDS));
-                        socketChannel.pipeline().addLast(new ProxyHandler(adapter));
+                        socketChannel.pipeline().addLast(new SocketServerProxyHandler(adapter));
                     }
                 });
         try {

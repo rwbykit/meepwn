@@ -4,11 +4,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 
-class ProxyHandler extends ChannelInboundHandlerAdapter {
+class SocketServerProxyHandler extends ChannelInboundHandlerAdapter {
 
     private AbstractNettyChannelInboundHandler handler;
 
-    public ProxyHandler(AbstractNettyChannelInboundHandler handler) {
+    public SocketServerProxyHandler(AbstractNettyChannelInboundHandler handler) {
         this.handler = handler;
         this.handler.init();
     }
