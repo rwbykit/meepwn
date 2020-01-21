@@ -8,6 +8,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,19 +18,19 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class NettySocketClientService implements SocketClientService {
+public class SocketClient implements SocketClientService {
 
-    private final static Logger logger = LoggerFactory.getLogger(NettySocketClientService.class);
+    private final static Logger logger = LoggerFactory.getLogger(SocketClient.class);
 
     SocketClientConfig config;
 
     SocketChannel socketChannel;
     Bootstrap bootstrap;
-    private AbstractNettyClientChannelHandler handler;
+    private AbstractClientChannelHandler handler;
     EventLoopGroup group = new NioEventLoopGroup();
     private boolean isConnect = false;
 
-    public NettySocketClientService(AbstractNettyClientChannelHandler handler, SocketClientConfig config) {
+    public SocketClient(AbstractClientChannelHandler handler, SocketClientConfig config) {
         this.handler = handler;
         this.config = config;
     }
@@ -75,9 +77,10 @@ public class NettySocketClientService implements SocketClientService {
 
                         @Override
                         protected void initChannel(SocketChannel sh) throws Exception {
+                            sh.pipeline().addLast(new LoggingHandler(LogLevel.INFO));
                             sh.pipeline().addLast(new IdleStateHandler(config.getReadTimeOut(),
                                     config.getWriteTimeOut(), config.getWriteTimeOut(), TimeUnit.SECONDS));
-                            sh.pipeline().addLast(new ProxyChannelHandler(handler));
+                            sh.pipeline().addLast(new ProxySocketChannelHandler(handler));
                         }
                     });
 

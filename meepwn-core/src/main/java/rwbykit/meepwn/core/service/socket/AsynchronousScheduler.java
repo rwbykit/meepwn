@@ -13,7 +13,7 @@ public class AsynchronousScheduler {
 
     private static ThreadPool threadPool;
 
-    public static void doSchedule(ChannelHandlerContext context, NettySocketServerChannelHandler handler) {
+    public static void doSchedule(ChannelHandlerContext context, SocketServerChannelHandler handler) {
 
         Callable<?> callable = handler.getActionService();
         try {

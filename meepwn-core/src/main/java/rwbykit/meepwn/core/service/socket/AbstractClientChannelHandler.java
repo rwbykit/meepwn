@@ -6,9 +6,9 @@ import rwbykit.meepwn.core.service.ActionMessage;
 import rwbykit.meepwn.core.service.DataConverter;
 import rwbykit.meepwn.core.service.MessageConverter;
 
-public class AbstractNettyClientChannelHandler extends AbstractNettyChannelInboundHandler implements ActionMessage {
+public class AbstractClientChannelHandler extends AbstractChannelInboundHandler implements ActionMessage {
 
-	public AbstractNettyClientChannelHandler(DataConverter dataConverter, MessageConverter messageConverter) {
+	public AbstractClientChannelHandler(DataConverter dataConverter, MessageConverter messageConverter) {
 		super(dataConverter, messageConverter);
 	}
 	

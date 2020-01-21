@@ -11,15 +11,15 @@ import rwbykit.meepwn.core.service.MessageConverter;
 import java.io.Serializable;
 import java.nio.ByteBuffer;
 
-public class NettySocketServerChannelHandler extends AbstractNettyChannelInboundHandler {
+public class SocketServerChannelHandler extends AbstractChannelInboundHandler {
 
-    private final static Logger logger = LoggerFactory.getLogger(NettySocketServerChannelHandler.class);
+    private final static Logger logger = LoggerFactory.getLogger(SocketServerChannelHandler.class);
 
     private AbstractActionService actionService;
 
     private boolean isAsyncSchedule = false;
 
-    public NettySocketServerChannelHandler(DataConverter dataConverter, MessageConverter messageConverter, AbstractActionService actionService) {
+    public SocketServerChannelHandler(DataConverter dataConverter, MessageConverter messageConverter, AbstractActionService actionService) {
         super(dataConverter, messageConverter);
         this.actionService = actionService;
     }

@@ -4,7 +4,7 @@
        xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" >
        
-	<bean id="nettySocketServerService" class="rwbykit.meepwn.core.service.socket.SocketServer" init-method="start" destroy-method="destroy">
+	<bean id="nettySocketServerService" class="rwbykit.meepwn.core.service.socket.NettySocketServerService" init-method="start" destroy-method="destroy">
 		<constructor-arg name="adapter" ref="nettySocketServerChannelHandler" />
 		<constructor-arg name="config" ref="socketServerConfig" />
 	</bean>
@@ -13,20 +13,20 @@
 		<property name="port" value="8085" />
 	</bean>
 	
-	<bean id="nettySocketServerChannelHandler" class="rwbykit.meepwn.core.service.socket.SocketServerChannelHandler" scope="prototype">
+	<bean id="nettySocketServerChannelHandler" class="rwbykit.meepwn.core.service.socket.NettySocketServerChannelHandler" scope="prototype">
 		<constructor-arg name="dataConverter" ref="defSocketDataConverter" />
 		<constructor-arg name="messageConverter" ref="defSocketMessageConverter" />
 		<constructor-arg name="actionService" ref="action" />
 		<property name="asyncSchedule" value="false" />
 	</bean>
 	
-	<bean id="defSocketDataConverter" class="rwbykit.meepwn.core.service.socket.SocketDataConverter">
+	<bean id="defSocketDataConverter" class="rwbykit.meepwn.core.service.socket.DefSocketDataConverter">
 		<property name="headBytesLength" value="4" />
 		<property name="lengthContainsHeadBytes" value="false" />
 	</bean>
 	
 	
-	<bean id="defSocketMessageConverter" class="rwbykit.meepwn.core.service.socket.SocketMessageConverter" >
+	<bean id="defSocketMessageConverter" class="rwbykit.meepwn.core.service.socket.DefSocketMessageConverter" >
 		<property name="charset" value="UTF-8" />
 	</bean>
 	

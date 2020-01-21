@@ -4,18 +4,18 @@ import rwbykit.meepwn.core.service.DataConverter;
 
 import java.nio.ByteBuffer;
 
-public class DefSocketDataConverter implements DataConverter {
+public class SocketDataConverter implements DataConverter {
 
     private int headBytesLength;
 
     private boolean lengthContainsHeadBytes = false;
 
-    public DefSocketDataConverter() {
+    public SocketDataConverter() {
         this(4, false);
     }
 
 
-    public DefSocketDataConverter(int headBytesLength, boolean lengthContainsHeadBytes) {
+    public SocketDataConverter(int headBytesLength, boolean lengthContainsHeadBytes) {
         this.headBytesLength = headBytesLength;
         this.lengthContainsHeadBytes = lengthContainsHeadBytes;
     }

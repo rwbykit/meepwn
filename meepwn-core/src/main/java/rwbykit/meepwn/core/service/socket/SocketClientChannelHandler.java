@@ -20,11 +20,11 @@ import rwbykit.meepwn.core.service.MessageConverter;
  * @version 1.0
  *
  */
-public class NettySocketClientChannelHandler extends AbstractNettyClientChannelHandler {
+public class SocketClientChannelHandler extends AbstractClientChannelHandler {
 	
-	private static Logger logger = LoggerFactory.getLogger(NettySocketClientChannelHandler.class);
+	private static Logger logger = LoggerFactory.getLogger(SocketClientChannelHandler.class);
 
-	public NettySocketClientChannelHandler(DataConverter dataConverter, MessageConverter messageConverter) {
+	public SocketClientChannelHandler(DataConverter dataConverter, MessageConverter messageConverter) {
 		super(dataConverter, messageConverter);
 	}
 

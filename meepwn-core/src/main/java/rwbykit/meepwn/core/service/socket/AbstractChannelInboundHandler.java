@@ -11,7 +11,7 @@ import rwbykit.meepwn.core.service.MessageConverter;
 import java.nio.ByteBuffer;
 import java.util.Objects;
 
-class AbstractNettyChannelInboundHandler extends ChannelInboundHandlerAdapter {
+class AbstractChannelInboundHandler extends ChannelInboundHandlerAdapter {
 
     /** 数据转换 */
     private DataConverter dataConverter;
@@ -25,7 +25,7 @@ class AbstractNettyChannelInboundHandler extends ChannelInboundHandlerAdapter {
     /** 是否读取结束 */
     private boolean readComplete = false;
 
-    public AbstractNettyChannelInboundHandler(DataConverter dataConverter, MessageConverter messageConverter) {
+    public AbstractChannelInboundHandler(DataConverter dataConverter, MessageConverter messageConverter) {
         this.dataConverter = dataConverter;
         this.messageConverter = messageConverter;
     }

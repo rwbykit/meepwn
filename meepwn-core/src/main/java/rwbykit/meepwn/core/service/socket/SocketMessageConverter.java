@@ -10,18 +10,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DefSocketMessageConverter implements MessageConverter {
+public class SocketMessageConverter implements MessageConverter {
 
-    private final static Logger logger = LoggerFactory.getLogger(DefSocketMessageConverter.class);
+    private final static Logger logger = LoggerFactory.getLogger(SocketMessageConverter.class);
     final static Pattern pattern = Pattern.compile("\n*|\t|\r");
 
     private String charset;
 
-    public DefSocketMessageConverter() {
+    public SocketMessageConverter() {
         this(StandardCharsets.UTF_8.name());
     }
 
-    public DefSocketMessageConverter(String charset) {
+    public SocketMessageConverter(String charset) {
         this.charset = charset;
     }
 
