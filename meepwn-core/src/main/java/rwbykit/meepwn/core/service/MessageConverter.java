@@ -2,7 +2,7 @@ package rwbykit.meepwn.core.service;
 
 import java.io.Serializable;
 
-public interface MessageConverter {
+public interface MessageConverter<T> {
 
     /**
      * 打包
@@ -10,7 +10,7 @@ public interface MessageConverter {
      * @return
      * @throws RuntimeException
      */
-    public Object pack(Serializable serializable) throws RuntimeException;
+    public T pack(Serializable serializable) throws RuntimeException;
 
     /**
      * 解包
@@ -18,6 +18,6 @@ public interface MessageConverter {
      * @return
      * @throws RuntimeException
      */
-    public Serializable unpack(Object object) throws RuntimeException;
+    public Serializable unpack(T object) throws RuntimeException;
 
 }

@@ -10,10 +10,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SocketMessageConverter implements MessageConverter {
+public class SocketMessageConverter implements MessageConverter<byte[]> {
 
     private final static Logger logger = LoggerFactory.getLogger(SocketMessageConverter.class);
     final static Pattern pattern = Pattern.compile("\n*|\t|\r");
+    final static byte[] EMPTY_BYTES = "".getBytes();
 
     private String charset;
 
@@ -26,20 +27,19 @@ public class SocketMessageConverter implements MessageConverter {
     }
 
     @Override
-    public Object pack(Serializable serializable) throws RuntimeException {
+    public byte[] pack(Serializable serializable) throws RuntimeException {
         try {
             return ((String) serializable).getBytes(charset);
         } catch (Exception e) {
             logger.debug("打包出现异常!", e);
         }
-        return "";
+        return EMPTY_BYTES;
     }
 
     @Override
-    public Serializable unpack(Object object) throws RuntimeException {
-        byte[] b = (byte[]) object;
+    public Serializable unpack(byte[] object) throws RuntimeException {
         try {
-            String str = new String(b, charset);
+            String str = new String(object, charset);
             logger.info("解包, 接受报文信息:"+ str);
             str = str.replaceAll("  ", "");
             Matcher m = pattern.matcher(str);
