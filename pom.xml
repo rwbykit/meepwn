@@ -8,7 +8,6 @@
         <module>meepwn-core</module>
         <module>meepwn-spring-boot-starter</module>
         <module>meepwn-test</module>
-        <module>meepwn-message-validation</module>
     </modules>
     <packaging>pom</packaging>
     

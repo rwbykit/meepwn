@@ -25,5 +25,4 @@ public class SocketServiceAutoConfiguration {
         AsynchronousScheduler.setThreadPool(threadPool);
     }
 
-
 }
